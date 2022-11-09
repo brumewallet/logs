@@ -10,6 +10,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  res.setHeader("Cache-Control", "max-age=0, s-maxage=1")
+
   const { data, error } = await supabase
     .from("requests")
     .select("*")
