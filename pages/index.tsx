@@ -33,12 +33,12 @@ function useLogs() {
 export default function Home() {
   const logs = useLogs()
 
-  const LogSubrow = (title: string, text: string) =>
+  const LogSubrow = (title: string, text: string, style = "") =>
     <div className="flex gap-2">
       <span className="text-gray-500">
         {title}
       </span>
-      <span className="">
+      <span className={style}>
         {text}
       </span>
     </div>
@@ -46,7 +46,7 @@ export default function Home() {
   const LogRow = (log: Log) =>
     <div key={log.time} className="p-4 border rounded-xl">
       {LogSubrow("Time", new Date(log.time).toLocaleString())}
-      {LogSubrow("IP Address", log.ip)}
+      {LogSubrow("IP Address", log.ip, log.ip === "2620:7:6001::140" ? "text-green-500" : "text-red-500")}
       {LogSubrow("RPC Method", log.method)}
       {LogSubrow("RPC Endpoint", log.endpoint)}
     </div>
