@@ -1,7 +1,8 @@
+import { ChildrenProps } from "@hazae41/xswr/dist/types/libs/react"
 import { createContext, useContext, useEffect } from "react"
 import { createPortal } from "react-dom"
-import { useLazyMemo } from "src/utils/react/memo"
-import { ChildrenProps } from "src/utils/react/props"
+import { useLazyMemo } from "../../react/memo"
+
 
 export const ModalContext =
   createContext<number>(0)
