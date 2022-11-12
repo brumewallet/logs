@@ -1,0 +1,22 @@
+@layer utilities {
+  .text-default {
+    @apply text-violet12;
+  }
+
+  .text-opposite {
+    @apply text-white;
+  }
+
+  .text-contrast {
+    @apply text-mauve11;
+  }
+
+  .text-colored {
+    @apply text-violet11;
+  }
+
+  .text-break {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+}
