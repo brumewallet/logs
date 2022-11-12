@@ -44,14 +44,6 @@ export default function Home() {
       </span>
     </div>
 
-  const LogRow = (log: Log) =>
-    <div key={log.time} className="p-4 border rounded-xl">
-      {LogSubrow("Time", new Date(log.time).toLocaleString())}
-      {LogSubrow("IP Address", log.ip, log.ip === "2620:7:6001::140" ? "text-green-500" : "text-red-500")}
-      {LogSubrow("RPC Method", log.method)}
-      {LogSubrow("RPC Endpoint", log.endpoint)}
-    </div>
-
   const checkTorLog = (log: Log) => {
     if (log.ip === "2620:7:6001::140") return true
     return false
