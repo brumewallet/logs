@@ -73,7 +73,7 @@ export default function Home() {
             </div>
             <div className="grow" />
             <a
-              href={`https://metrics.torproject.org/rs.html#details/${log.ip}`}
+              href={`https://metrics.torproject.org/rs.html#search/${log.ip}`}
               target="_blank" rel="noopener noreferrer">
               <OppositeTextButtonRounded>
                 <img className="icon-md"
