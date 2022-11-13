@@ -84,7 +84,7 @@ export default function Home() {
       </div>
       <div className="flex flex-col items-center gap-2">
         <span className="text-3xl text-colored">
-          Other wallet request
+          Other wallet requests
         </span>
         <div className="my-2" />
         {logs.data?.filter(checkOtherLog).map(log =>
