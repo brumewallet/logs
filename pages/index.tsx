@@ -60,7 +60,7 @@ export default function Home() {
     <div className="flex items-start justify-center gap-[100px]">
       <div className="flex flex-col items-center gap-2">
         <span className="text-3xl text-colored">
-          Lunar request
+          Lunar requests
         </span>
         <div className="my-2" />
         {logs.data?.filter(checkTorLog).map(log =>
@@ -73,7 +73,7 @@ export default function Home() {
             </div>
             <div className="grow" />
             <a
-              href="https://metrics.torproject.org/rs.html#details/A868303126987902D51F2B6F06DD90038C45B119"
+              href={`https://metrics.torproject.org/rs.html#details/${log.ip}`}
               target="_blank" rel="noopener noreferrer">
               <OppositeTextButtonRounded>
                 <img className="icon-md"
