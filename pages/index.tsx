@@ -1,4 +1,4 @@
-import { ResultInit, useFetch, useQuery } from "@hazae41/xswr"
+import { useFetch, useQuery } from "@hazae41/xswr"
 import { OppositeTextButton, OppositeTextButtonRounded } from "../components/buttons/button"
 
 async function fetchJsonResult<T>(url: string) {
@@ -9,9 +9,9 @@ async function fetchJsonResult<T>(url: string) {
     return { error }
   }
 
-  const result = await res.json() as ResultInit<T>
+  const result = await res.json() as any
 
-  if ("error" in result) {
+  if (result.error) {
     return { error: result.error }
   }
 
