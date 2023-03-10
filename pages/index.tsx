@@ -71,7 +71,7 @@ export default function Home() {
   }
 
   const checkOtherLog = (log: Log) => {
-    return log.ip === myip.data
+    return log.ip === myip.data?.trim()
   }
 
   const LogsDisplay =
