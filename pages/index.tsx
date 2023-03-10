@@ -15,7 +15,7 @@ async function fetcher<T>(url: string) {
 }
 
 interface Log {
-  time: string,
+  created_at: string,
   ip: string,
   method: string,
   endpoint: string
@@ -64,9 +64,9 @@ export default function Home() {
         </span>
         <div className="my-2" />
         {logs.data?.filter(checkTorLog).map(log =>
-          <div key={log.time} className="p-4 flex items-start border rounded-xl bg-component border border-default w-[400px]">
+          <div key={log.created_at} className="p-4 flex items-start border rounded-xl bg-component border border-default w-[400px]">
             <div className="flex flex-col">
-              {LogSubrow("Time", new Date(log.time).toLocaleString())}
+              {LogSubrow("Time", new Date(log.created_at).toLocaleString())}
               {LogSubrow("IP Address", log.ip, "text-green-500")}
               {LogSubrow("RPC Method", log.method)}
               {LogSubrow("Endpoint", log.endpoint)}
@@ -88,9 +88,9 @@ export default function Home() {
         </span>
         <div className="my-2" />
         {logs.data?.filter(checkOtherLog).map(log =>
-          <div key={log.time} className="p-4 flex items-start border rounded-xl bg-component border border-default w-[400px]">
+          <div key={log.created_at} className="p-4 flex items-start border rounded-xl bg-component border border-default w-[400px]">
             <div className="flex flex-col">
-              {LogSubrow("Time", new Date(log.time).toLocaleString())}
+              {LogSubrow("Time", new Date(log.created_at).toLocaleString())}
               {LogSubrow("IP Address", log.ip, "text-red-500")}
               {LogSubrow("RPC Method", log.method)}
               {LogSubrow("Endpoint", log.endpoint)}

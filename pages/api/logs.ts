@@ -15,7 +15,7 @@ export default async function handler(
   const { data, error } = await supabase
     .from("requests")
     .select("*")
-    .order("time", { ascending: false })
+    .order("created_at", { ascending: false })
     .limit(100)
 
   res.status(200).json({ data, error })
