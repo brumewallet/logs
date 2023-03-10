@@ -58,8 +58,6 @@ export default function Home() {
   const myip = useMyIP()
   const logs = useLogs()
 
-  console.log(myip.data)
-
   const LogSubrow = (title: string, text: string, style = "") =>
     <div className="flex gap-2">
       <span className="text-gray-500">
@@ -149,7 +147,7 @@ export default function Home() {
       <span className="text-5xl text-center text-colored">
         Brume Wallet
       </span>
-      <img className="icon-3xl"
+      <img className="h-[50px]"
         src="logo.svg" alt="logo" />
     </div>
     <div className="h-2" />
