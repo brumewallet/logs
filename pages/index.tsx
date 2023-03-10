@@ -1,8 +1,8 @@
-import { getSingleSchema, Result, useFetch, useQuery } from "@hazae41/xswr"
+import { ResultInit, useFetch, useQuery } from "@hazae41/xswr"
 import { OppositeTextButton, OppositeTextButtonRounded } from "../components/buttons/button"
 import { ipArray } from "../react/utils"
 
-async function fetcher<T>(url: string) {
+async function fetchJsonResult<T>(url: string) {
   const res = await fetch(url)
 
   if (!res.ok) {
@@ -10,8 +10,13 @@ async function fetcher<T>(url: string) {
     return { error }
   }
 
-  const { data, error } = await res.json() as Result<T>
-  return { data, error }
+  const result = await res.json() as ResultInit<T>
+
+  if ("error" in result) {
+    return { error: result.error }
+  }
+
+  return { data: result.data }
 }
 
 interface Log {
@@ -21,19 +26,35 @@ interface Log {
   endpoint: string
 }
 
-function getLogsSchema() {
-  return getSingleSchema<Log[]>(`/api/logs`, fetcher)
-}
-
 function useLogs() {
-  const query = useQuery(getLogsSchema, [])
+  const query = useQuery<Log[]>(`/api/logs`, fetchJsonResult)
   useFetch(query)
   // useInterval(query, 1000)
   return query
 }
 
+async function fetchText(url: string) {
+  const res = await fetch(url)
+
+  if (!res.ok) {
+    const error = new Error(await res.text())
+    return { error }
+  }
+
+  return { data: await res.text() }
+}
+
+function useMyIP() {
+  const query = useQuery<string>(`https://icanhazip.com/`, fetchText)
+  useFetch(query)
+  return query
+}
+
 export default function Home() {
+  const myip = useMyIP()
   const logs = useLogs()
+
+  console.log(myip.data)
 
   const LogSubrow = (title: string, text: string, style = "") =>
     <div className="flex gap-2">
