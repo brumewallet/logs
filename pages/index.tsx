@@ -1,6 +1,11 @@
 import { useFetch, useQuery } from "@hazae41/xswr"
 import { OppositeTextButton, OppositeTextButtonRounded } from "../components/buttons/button"
 
+export const trimString = (name: string, n: number) => {
+  if (name.length <= n) return name
+  return name.substring(0, n) + '...'
+}
+
 async function fetchJsonResult<T>(url: string) {
   const res = await fetch(url)
 
@@ -61,7 +66,7 @@ export default function Home() {
         {title}
       </span>
       <span className={style}>
-        {text}
+        {trimString(text, 25)}
       </span>
     </div>
 
