@@ -1,6 +1,5 @@
 import { ResultInit, useFetch, useQuery } from "@hazae41/xswr"
 import { OppositeTextButton, OppositeTextButtonRounded } from "../components/buttons/button"
-import { ipArray } from "../react/utils"
 
 async function fetchJsonResult<T>(url: string) {
   const res = await fetch(url)
@@ -68,13 +67,11 @@ export default function Home() {
 
 
   const checkTorLog = (log: Log) => {
-    if (ipArray.includes(log.ip)) return true
-    return false
+    return log.ip !== myip.data
   }
 
   const checkOtherLog = (log: Log) => {
-    if (!ipArray.includes(log.ip)) return true
-    return false
+    return log.ip === myip.data
   }
 
   const LogsDisplay =
