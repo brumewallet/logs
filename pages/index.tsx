@@ -67,7 +67,7 @@ export default function Home() {
 
 
   const checkTorLog = (log: Log) => {
-    return log.ip !== myip.data
+    return log.ip !== myip.data?.trim()
   }
 
   const checkOtherLog = (log: Log) => {
