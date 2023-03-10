@@ -1,11 +1,13 @@
-import { ChildrenProps } from "@hazae41/xswr/dist/types/libs/react"
+import { ReactNode } from "react"
 import { usePopper } from "react-popper"
 import { useBoolean } from "../../react/boolean"
 import { useElement } from "../../react/element"
 import { TargetProps } from "../../react/props"
-
 import { Modal } from "./modal"
 
+interface ChildrenProps {
+  children: ReactNode
+}
 
 export const popperNoOffsetOptions: any = {
   placement: "bottom",
