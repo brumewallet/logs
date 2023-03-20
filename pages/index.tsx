@@ -70,26 +70,32 @@ export default function Home() {
       </a>
     </div>
 
+  const YourIpLogs =
+    <div className="flex flex-col items-center gap-2">
+      <span className="text-3xl text-colored">
+        {`Requests coming from your IP`}
+      </span>
+      <div className="my-2" />
+      {logs.data
+        ?.filter(it => it.ip === myip.data?.trim())
+        ?.map(LogRow)}
+    </div>
+
+  const OtherIpLogs =
+    <div className="flex flex-col items-center gap-2">
+      <span className="text-3xl text-colored">
+        {`Requests not coming from your IP`}
+      </span>
+      <div className="my-2" />
+      {logs.data
+        ?.filter(it => it.ip !== myip.data?.trim())
+        ?.map(LogRow)}
+    </div>
+
   const Body =
     <div className="flex flex-wrap justify-evenly gap-[100px]">
-      <div className="flex flex-col items-center gap-2">
-        <span className="text-3xl text-colored">
-          {`Requests coming from your IP`}
-        </span>
-        <div className="my-2" />
-        {logs.data
-          ?.filter(it => it.ip === myip.data?.trim())
-          ?.map(LogRow)}
-      </div>
-      <div className="flex flex-col items-center gap-2">
-        <span className="text-3xl text-colored">
-          {`Requests not coming from your IP`}
-        </span>
-        <div className="my-2" />
-        {logs.data
-          ?.filter(it => it.ip !== myip.data?.trim())
-          ?.map(LogRow)}
-      </div>
+      {YourIpLogs}
+      {OtherIpLogs}
     </div>
 
   const RefreshButton =
