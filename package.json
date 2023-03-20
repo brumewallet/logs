@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@hazae41/xswr": "^1.4.0",
+    "@hazae41/xswr": "^1.4.2-11",
     "@heroicons/react": "^2.0.16",
     "@supabase/supabase-js": "^2.10.0",
     "@types/node": "18.15.0",

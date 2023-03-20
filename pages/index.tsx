@@ -1,26 +1,12 @@
-import { useFetch, useQuery } from "@hazae41/xswr"
+/* eslint-disable @next/next/no-img-element */
+import { useFetch, useInterval, useQuery } from "@hazae41/xswr"
 import { OppositeTextButton, OppositeTextButtonRounded } from "../components/buttons/button"
+import { fetchJsonResult } from "../src/mods/fetchers/json"
+import { fetchText } from "../src/mods/fetchers/text"
 
 export const trimString = (name: string, n: number) => {
   if (name.length <= n) return name
   return name.substring(0, n) + '...'
-}
-
-async function fetchJsonResult<T>(url: string) {
-  const res = await fetch(url)
-
-  if (!res.ok) {
-    const error = new Error(await res.text())
-    return { error }
-  }
-
-  const result = await res.json() as any
-
-  if (result.error) {
-    return { error: result.error }
-  }
-
-  return { data: result.data }
 }
 
 interface Log {
@@ -33,20 +19,10 @@ interface Log {
 function useLogs() {
   const query = useQuery<Log[]>(`/api/logs`, fetchJsonResult)
   useFetch(query)
-  // useInterval(query, 1000)
+  useInterval(query, 1000)
   return query
 }
 
-async function fetchText(url: string) {
-  const res = await fetch(url)
-
-  if (!res.ok) {
-    const error = new Error(await res.text())
-    return { error }
-  }
-
-  return { data: await res.text() }
-}
 
 function useMyIP() {
   const query = useQuery<string>(`https://icanhazip.com/`, fetchText)
@@ -68,98 +44,88 @@ export default function Home() {
       </span>
     </div>
 
-
-  const checkTorLog = (log: Log) => {
-    return log.ip !== myip.data?.trim()
-  }
-
-  const checkOtherLog = (log: Log) => {
-    return log.ip === myip.data?.trim()
-  }
-
-  const LogsDisplay =
-    <div className="flex items-start justify-center gap-[100px]">
-      <div className="flex flex-col items-center gap-2">
-        <span className="text-3xl text-colored">
-          Brume requests
-        </span>
-        <div className="my-2" />
-        {logs.data?.filter(checkTorLog).map(log =>
-          <div key={log.created_at} className="p-4 flex items-start border rounded-xl bg-component border border-default w-[400px]">
-            <div className="flex flex-col">
-              {LogSubrow("Time", new Date(log.created_at).toLocaleString())}
-              {LogSubrow("IP Address", log.ip, "text-green-500")}
-              {LogSubrow("RPC Method", log.method)}
-              {LogSubrow("Endpoint", log.endpoint)}
-            </div>
-            <div className="grow" />
-            <a
-              href={`https://metrics.torproject.org/rs.html#search/${log.ip}`}
-              target="_blank" rel="noopener noreferrer">
-              <OppositeTextButtonRounded>
-                <img className="icon-md"
-                  src="tor.svg" alt="tor-logo" />
-              </OppositeTextButtonRounded>
-            </a>
-          </div>)}
-      </div>
-      <div className="flex flex-col items-center gap-2">
-        <span className="text-3xl text-colored">
-          Other wallet requests
-        </span>
-        <div className="my-2" />
-        {logs.data?.filter(checkOtherLog).map(log =>
-          <div key={log.created_at} className="p-4 flex items-start border rounded-xl bg-component border border-default w-[400px]">
-            <div className="flex flex-col">
-              {LogSubrow("Time", new Date(log.created_at).toLocaleString())}
-              {LogSubrow("IP Address", log.ip, "text-red-500")}
-              {LogSubrow("RPC Method", log.method)}
-              {LogSubrow("Endpoint", log.endpoint)}
-            </div>
-            <div className="grow" />
-            <a
-              href="https://www.iplocation.net/"
-              target="_blank" rel="noopener noreferrer">
-              <OppositeTextButtonRounded>
-                <img className="icon-md"
-                  src="ip.png" alt="My-ip" />
-              </OppositeTextButtonRounded>
-            </a>
-          </div>)}
-      </div>
+  const LogRow = (log: Log) =>
+    <div key={log.created_at} className="p-4 flex items-start border rounded-xl bg-component border-default w-[400px]">
+      {LogSubrow("Time", new Date(log.created_at).toLocaleString())}
+      {LogSubrow("IP Address", log.ip, "text-red-500")}
+      {LogSubrow("RPC Method", log.method)}
+      {LogSubrow("Endpoint", log.endpoint)}
+      <a className=""
+        href="https://www.iplocation.net/"
+        target="_blank" rel="noopener noreferrer">
+        <OppositeTextButtonRounded>
+          <img className="icon-md"
+            alt="IP icon"
+            src="/ip.png" />
+        </OppositeTextButtonRounded>
+      </a>
+      <a className=""
+        href={`https://metrics.torproject.org/rs.html#search/${log.ip}`}
+        target="_blank" rel="noopener noreferrer">
+        <OppositeTextButtonRounded>
+          <img className="icon-md"
+            alt="Onion icon"
+            src="/tor.svg" />
+        </OppositeTextButtonRounded>
+      </a>
     </div>
 
+  const Body =
+    <div className="flex flex-wrap justify-evenly gap-[100px]">
+      <div className="flex flex-col items-center gap-2">
+        <span className="text-3xl text-colored">
+          {`Requests coming from your IP`}
+        </span>
+        <div className="my-2" />
+        {logs.data
+          ?.filter(it => it.ip === myip.data?.trim())
+          ?.map(LogRow)}
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <span className="text-3xl text-colored">
+          {`Requests not coming from your IP`}
+        </span>
+        <div className="my-2" />
+        {logs.data
+          ?.filter(it => it.ip !== myip.data?.trim())
+          ?.map(LogRow)}
+      </div>
+    </div>
 
   const RefreshButton =
-    <div className="flex items-center justify-center">
-      <OppositeTextButton className="w-[200px]"
-        onClick={() => logs.refetch()}>
-        <span className="text-3xl">
-          {logs.loading
-            ? "Loading..."
-            : "Refresh"}
-        </span>
-      </OppositeTextButton>
-    </div>
-
-  const Header = <div className="flex flex-col items-center">
-    <div className="flex justify-center items-center gap-4">
-      <span className="text-5xl text-center text-colored">
-        Brume Wallet
+    <OppositeTextButton className="w-[200px]"
+      onClick={() => logs.refetch()}>
+      <span className="text-3xl">
+        {logs.loading
+          ? `Loading...`
+          : `Refresh`}
       </span>
-      <img className="h-[50px]"
-        src="logo.svg" alt="logo" />
-    </div>
-    <div className="h-2" />
-    <span className="text-xl text-contrast">{"Don't trust, verify!"}</span>
-  </div>
+    </OppositeTextButton>
 
+  const Toolbar =
+    <div className="flex items-center justify-center">
+      {RefreshButton}
+    </div>
+
+  const Header = <div className="max-w-[600px] m-auto flex flex-col items-center gap-2">
+    <div className="flex items-center gap-4">
+      <img className="h-[50px] w-auto"
+        alt="logo"
+        src="/logo.svg" />
+      <span className="text-5xl text-colored">
+        {`Brume Logs`}
+      </span>
+    </div>
+    <span className="text-xl text-contrast">
+      {`Don't trust, verify!`}
+    </span>
+  </div>
 
   return <div className="p-4 bg-default">
     {Header}
     <div className="h-10" />
-    {RefreshButton}
+    {Toolbar}
     <div className="h-20" />
-    {LogsDisplay}
+    {Body}
   </div>
 }
