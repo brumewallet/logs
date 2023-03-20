@@ -13,5 +13,6 @@ export async function fetchJson<T>(url: string) {
 
 export async function fetchJsonResult<T>(url: string) {
   const result = Result.from(await fetchJson<ResultInit<T>>(url))
+  console.log(result)
   return result.tryMapSync(inner => Result.from(inner).unwrap())
 }

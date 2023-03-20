@@ -4,11 +4,6 @@ import { OppositeTextButton, OppositeTextButtonRounded } from "../components/but
 import { fetchJsonResult } from "../src/mods/fetchers/json"
 import { fetchText } from "../src/mods/fetchers/text"
 
-export const trimString = (name: string, n: number) => {
-  if (name.length <= n) return name
-  return name.substring(0, n) + '...'
-}
-
 interface Log {
   created_at: string,
   ip: string,
@@ -23,7 +18,6 @@ function useLogs() {
   return query
 }
 
-
 function useMyIP() {
   const query = useQuery<string>(`https://icanhazip.com/`, fetchText)
   useFetch(query)
@@ -35,39 +29,41 @@ export default function Home() {
   const logs = useLogs()
 
   const LogSubrow = (title: string, text: string, style = "") =>
-    <div className="flex gap-2">
-      <span className="text-gray-500">
+    <div className="flex gap-2 overflow-hidden text-ellipsis">
+      <span className="shrink-0 text-gray-500">
         {title}
       </span>
       <span className={style}>
-        {trimString(text, 25)}
+        {text}
       </span>
     </div>
 
   const LogRow = (log: Log) =>
-    <div key={log.created_at} className="p-4 flex items-start border rounded-xl bg-component border-default w-[400px]">
+    <div key={log.created_at} className="p-4 border rounded-xl bg-component border-default w-full max-w-[800px]">
       {LogSubrow("Time", new Date(log.created_at).toLocaleString())}
-      {LogSubrow("IP Address", log.ip, "text-red-500")}
+      {LogSubrow("IP Address", log.ip, log.ip === myip.data?.trim() ? "text-red-500" : "text-green-500")}
       {LogSubrow("RPC Method", log.method)}
-      {LogSubrow("Endpoint", log.endpoint)}
-      <a className=""
-        href="https://www.iplocation.net/"
-        target="_blank" rel="noopener noreferrer">
-        <OppositeTextButtonRounded>
-          <img className="icon-md"
-            alt="IP icon"
-            src="/ip.png" />
-        </OppositeTextButtonRounded>
-      </a>
-      <a className=""
-        href={`https://metrics.torproject.org/rs.html#search/${log.ip}`}
-        target="_blank" rel="noopener noreferrer">
-        <OppositeTextButtonRounded>
-          <img className="icon-md"
-            alt="Onion icon"
-            src="/tor.svg" />
-        </OppositeTextButtonRounded>
-      </a>
+      <div className="h-2" />
+      <div className="flex gap-2">
+        <a className=""
+          href={`https://whatismyipaddress.com/ip/${log.ip}`}
+          target="_blank" rel="noopener noreferrer">
+          <OppositeTextButtonRounded>
+            <img className="icon-md"
+              alt="IP icon"
+              src="/ip.png" />
+          </OppositeTextButtonRounded>
+        </a>
+        <a className=""
+          href={`https://metrics.torproject.org/rs.html#search/${log.ip}`}
+          target="_blank" rel="noopener noreferrer">
+          <OppositeTextButtonRounded>
+            <img className="icon-md"
+              alt="Onion icon"
+              src="/tor.svg" />
+          </OppositeTextButtonRounded>
+        </a>
+      </div>
     </div>
 
   const YourIpLogs =

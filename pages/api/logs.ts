@@ -18,5 +18,8 @@ export default async function handler(
     .order("created_at", { ascending: false })
     .limit(100)
 
-  res.status(200).json({ data, error })
+  if (error)
+    res.status(200).json({ error })
+
+  res.status(200).json({ data })
 }
