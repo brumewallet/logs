@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useFetch, useOnline, useQuery, useVisible } from "@hazae41/xswr"
+import { getSchema, useFetch, useOnline, useQuery, useSchema, useVisible } from "@hazae41/xswr"
 import { OppositeTextButton, OppositeTextButtonRounded } from "../components/buttons/button"
 import { fetchJsonResult } from "../src/mods/fetchers/json"
 import { fetchText } from "../src/mods/fetchers/text"
@@ -11,8 +11,23 @@ interface Log {
   tor: boolean
 }
 
-function useLogs() {
-  const query = useQuery<Log[]>(`/api/logs`, fetchJsonResult)
+function getIpLogs(ip?: string) {
+  if (!ip) return
+
+  return getSchema<Log[]>(`/api/logs/ip?ip=${ip}`, fetchJsonResult)
+}
+
+function useIpLogs(ip?: string) {
+  const query = useSchema(getIpLogs, [ip])
+  useFetch(query)
+  useOnline(query)
+  useVisible(query)
+  // useInterval(query, 1000)
+  return query
+}
+
+function useTorLogs() {
+  const query = useQuery<Log[]>(`/api/logs/tor`, fetchJsonResult)
   useFetch(query)
   useOnline(query)
   useVisible(query)
@@ -30,15 +45,8 @@ function useMyIP() {
 
 export default function Home() {
   const myip = useMyIP()
-  const logs = useLogs()
-
-  const RefreshButton =
-    <OppositeTextButton className="w-full"
-      onClick={() => logs.refetch()}>
-      {logs.loading
-        ? `Loading...`
-        : `Refresh`}
-    </OppositeTextButton>
+  const ipLogs = useIpLogs(myip.data?.trim())
+  const torLogs = useTorLogs()
 
   const LogSubrow = (title: string, text: string, style = "") =>
     <div className="flex gap-2">
@@ -89,15 +97,17 @@ export default function Home() {
       </div>
       <div className="h-4" />
       <div className="flex flex-col gap-2">
-        {RefreshButton}
-        {logs.data
-          ?.filter(it => it.ip === myip.data?.trim())
-          ?.slice(0, 5)
-          ?.map(LogRow)}
+        <OppositeTextButton className="w-full"
+          onClick={() => ipLogs.refetch()}>
+          {ipLogs.loading
+            ? `Loading...`
+            : `Refresh`}
+        </OppositeTextButton>
+        {ipLogs.data?.map(LogRow)}
       </div>
     </div>
 
-  const OtherIpLogs =
+  const TorLogs =
     <div className="max-w-[400px]">
       <div className="text-2xl font-medium text-colored">
         {`Requests coming from Tor`}
@@ -108,18 +118,20 @@ export default function Home() {
       </div>
       <div className="h-4" />
       <div className="flex flex-col gap-2">
-        {RefreshButton}
-        {logs.data
-          ?.filter(it => it.tor)
-          ?.slice(0, 5)
-          ?.map(LogRow)}
+        <OppositeTextButton className="w-full"
+          onClick={() => torLogs.refetch()}>
+          {torLogs.loading
+            ? `Loading...`
+            : `Refresh`}
+        </OppositeTextButton>
+        {torLogs.data?.map(LogRow)}
       </div>
     </div>
 
   const Body =
     <div className="flex flex-wrap justify-evenly gap-16">
       {YourIpLogs}
-      {OtherIpLogs}
+      {TorLogs}
     </div>
 
   const Header = <div className="max-w-[800px] m-auto">

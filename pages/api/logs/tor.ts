@@ -16,7 +16,8 @@ export default async function handler(
     .from("requests")
     .select("*")
     .order("created_at", { ascending: false })
-    .limit(100)
+    .filter("tor", "eq", true)
+    .limit(5)
 
   if (error)
     res.status(200).json({ error })
