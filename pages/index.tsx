@@ -72,7 +72,7 @@ export default function Home() {
         {`Requests coming from your IP`}
       </div>
       <div className="text-contrast">
-        {`When you use MetaMask and similar wallets, we can see your IP address and use it to link your different accounts.`}
+        {`When you use MetaMask and similar wallets, we can see your IP address and use it to get your location and link your different accounts.`}
       </div>
       <div className="my-2" />
       {logs.data
@@ -126,9 +126,29 @@ export default function Home() {
     <span className="text-contrast">
       {`Don't trust, verify! This website will show you all Ethereum requests being made, by separating those coming from your IP address from those coming from the Tor network.`}
     </span>
+    <div className="h-8" />
+    <div className="text-2xl font-medium text-colored">
+      {`Setting up`}
+    </div>
+    <div className="text-contrast">
+      {`If you don't use Brume, you can setup logging on your wallet by using our proxy RPC, which will send all Ethereum requests to Cloudflare's Ethereum RPC and log the IP address the request is coming from.`}
+    </div>
+    <div>
+      <span className="text-contrast">
+        {`Just use the following RPC URL:`}
+      </span>
+      <span className="mr-1" />
+      <input className="w-[22ch] text-center"
+        readOnly
+        onClick={e => e.currentTarget.select()}
+        value="https://proxy.haz.workers.dev" />
+    </div>
+    <div className="text-contrast">
+      {`You won't need to make an Ethereum transaction, your wallet already makes RPC requests when fetching your account balance.`}
+    </div>
   </div>
 
-  return <div className="p-4 bg-default">
+  return <div className="p-8 bg-default">
     {Header}
     <div className="h-8" />
     {Toolbar}
