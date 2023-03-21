@@ -159,7 +159,7 @@ export default function Home() {
         {`Just use the following RPC URL with chain ID 1:`}
       </div>
       <div className="border border-default p-2 rounded-xl grow">
-        <input className="outline-none w-full text-center"
+        <input className="bg-transparent outline-none w-full text-center"
           readOnly
           onClick={e => e.currentTarget.select()}
           value="https://proxy.haz.workers.dev" />
