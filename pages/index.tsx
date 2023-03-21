@@ -92,6 +92,7 @@ export default function Home() {
         {RefreshButton}
         {logs.data
           ?.filter(it => it.ip === myip.data?.trim())
+          ?.slice(0, 5)
           ?.map(LogRow)}
       </div>
     </div>
@@ -110,6 +111,7 @@ export default function Home() {
         {RefreshButton}
         {logs.data
           ?.filter(it => it.tor)
+          ?.slice(0, 5)
           ?.map(LogRow)}
       </div>
     </div>
