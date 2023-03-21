@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useFetch, useInterval, useQuery } from "@hazae41/xswr"
+import { useFetch, useQuery } from "@hazae41/xswr"
 import { OppositeTextButton, OppositeTextButtonRounded } from "../components/buttons/button"
 import { fetchJsonResult } from "../src/mods/fetchers/json"
 import { fetchText } from "../src/mods/fetchers/text"
@@ -8,13 +8,13 @@ interface Log {
   created_at: string,
   ip: string,
   method: string,
-  endpoint: string
+  tor: boolean
 }
 
 function useLogs() {
   const query = useQuery<Log[]>(`/api/logs`, fetchJsonResult)
   useFetch(query)
-  useInterval(query, 1000)
+  // useInterval(query, 1000)
   return query
 }
 
@@ -41,7 +41,7 @@ export default function Home() {
   const LogRow = (log: Log) =>
     <div key={log.created_at} className="p-4 border rounded-xl bg-component border-default w-full max-w-[800px]">
       {LogSubrow("Time", new Date(log.created_at).toLocaleString())}
-      {LogSubrow("IP Address", log.ip, log.ip === myip.data?.trim() ? "text-red-500" : "text-green-500")}
+      {LogSubrow("IP Address", log.ip, log.tor ? "text-green-500" : "text-red-500")}
       {LogSubrow("RPC Method", log.method)}
       <div className="h-2" />
       <div className="flex gap-2">
@@ -80,11 +80,11 @@ export default function Home() {
   const OtherIpLogs =
     <div className="flex flex-col items-center gap-2">
       <span className="text-3xl text-colored">
-        {`Requests not coming from your IP`}
+        {`Requests coming from Tor`}
       </span>
       <div className="my-2" />
       {logs.data
-        ?.filter(it => it.ip !== myip.data?.trim())
+        ?.filter(it => it.tor)
         ?.map(LogRow)}
     </div>
 
