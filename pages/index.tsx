@@ -41,7 +41,7 @@ export default function Home() {
     </OppositeTextButton>
 
   const LogSubrow = (title: string, text: string, style = "") =>
-    <div className="flex gap-2 overflow-hidden text-ellipsis">
+    <div className="flex gap-2">
       <span className="shrink-0 text-gray-500">
         {title}
       </span>
@@ -53,7 +53,7 @@ export default function Home() {
   const LogRow = (log: Log) =>
     <div key={log.created_at} className="p-4 rounded-xl border border-default w-full">
       {LogSubrow("Time", new Date(log.created_at).toLocaleString())}
-      {LogSubrow("IP Address", log.ip, log.tor ? "text-green-500" : "text-red-500")}
+      {LogSubrow("IP Address", log.ip, log.tor ? "text-green-500 truncate" : "text-red-500 truncate")}
       {LogSubrow("RPC Method", log.method)}
       <div className="h-2" />
       <div className="flex gap-2">
