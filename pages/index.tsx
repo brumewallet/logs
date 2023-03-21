@@ -39,7 +39,7 @@ export default function Home() {
     </div>
 
   const LogRow = (log: Log) =>
-    <div key={log.created_at} className="p-4 border rounded-xl bg-component border-default w-full max-w-[800px]">
+    <div key={log.created_at} className="p-4 border rounded-xl bg-component border-default w-full">
       {LogSubrow("Time", new Date(log.created_at).toLocaleString())}
       {LogSubrow("IP Address", log.ip, log.tor ? "text-green-500" : "text-red-500")}
       {LogSubrow("RPC Method", log.method)}
@@ -67,10 +67,13 @@ export default function Home() {
     </div>
 
   const YourIpLogs =
-    <div className="flex flex-col items-center gap-2">
-      <span className="text-3xl text-colored">
+    <div className="flex flex-col gap-2 max-w-[400px]">
+      <div className="text-2xl font-medium text-colored">
         {`Requests coming from your IP`}
-      </span>
+      </div>
+      <div className="text-contrast">
+        {`When you use MetaMask and similar wallets, we can see your IP address and use it to link your different accounts.`}
+      </div>
       <div className="my-2" />
       {logs.data
         ?.filter(it => it.ip === myip.data?.trim())
@@ -78,10 +81,13 @@ export default function Home() {
     </div>
 
   const OtherIpLogs =
-    <div className="flex flex-col items-center gap-2">
-      <span className="text-3xl text-colored">
+    <div className="flex flex-col gap-2 max-w-[400px]">
+      <div className="text-2xl font-medium text-colored">
         {`Requests coming from Tor`}
-      </span>
+      </div>
+      <div className="text-contrast">
+        {`When you use Brume, we can't see your IP address, we can only see a Tor network address, which is different for each of your accounts.`}
+      </div>
       <div className="my-2" />
       {logs.data
         ?.filter(it => it.tor)
@@ -97,11 +103,9 @@ export default function Home() {
   const RefreshButton =
     <OppositeTextButton className="w-[200px]"
       onClick={() => logs.refetch()}>
-      <span className="text-3xl">
-        {logs.loading
-          ? `Loading...`
-          : `Refresh`}
-      </span>
+      {logs.loading
+        ? `Loading...`
+        : `Refresh`}
     </OppositeTextButton>
 
   const Toolbar =
@@ -109,25 +113,26 @@ export default function Home() {
       {RefreshButton}
     </div>
 
-  const Header = <div className="max-w-[600px] m-auto flex flex-col items-center gap-2">
-    <div className="flex items-center gap-4">
+  const Header = <div className="max-w-[800px] m-auto flex flex-col gap-2">
+    <div className="flex self-center items-center gap-4">
       <img className="h-[50px] w-auto"
         alt="logo"
         src="/logo.svg" />
-      <span className="text-5xl text-colored">
+      <span className="text-5xl font-bold text-colored">
         {`Brume Logs`}
       </span>
     </div>
-    <span className="text-xl text-contrast">
-      {`Don't trust, verify!`}
+    <div className="h-4" />
+    <span className="text-contrast">
+      {`Don't trust, verify! This website will show you all Ethereum requests being made, by separating those coming from your IP address from those coming from the Tor network.`}
     </span>
   </div>
 
   return <div className="p-4 bg-default">
     {Header}
-    <div className="h-10" />
+    <div className="h-8" />
     {Toolbar}
-    <div className="h-20" />
+    <div className="h-8" />
     {Body}
   </div>
 }
