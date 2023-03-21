@@ -154,12 +154,12 @@ export default function Home() {
       {`If you don't use Brume, you can setup logging on your wallet by using our proxy RPC, which will send all Ethereum requests to Cloudflare's Ethereum RPC and log the IP address the request is coming from.`}
     </div>
     <div className="h-2" />
-    <div className="flex flex-wrap items-center gap-1">
+    <div className="flex flex-wrap items-center gap-2">
       <div className="text-contrast">
         {`Just use the following RPC URL:`}
       </div>
-      <div className="border border-default p-2 rounded-xl">
-        <input className="outline-none w-[21ch] text-center"
+      <div className="border border-default p-2 rounded-xl grow">
+        <input className="outline-none w-full text-center"
           readOnly
           onClick={e => e.currentTarget.select()}
           value="https://proxy.haz.workers.dev" />
