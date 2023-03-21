@@ -22,7 +22,6 @@ function useIpLogs(ip?: string) {
   useFetch(query)
   useOnline(query)
   useVisible(query)
-  // useInterval(query, 1000)
   return query
 }
 
@@ -31,7 +30,6 @@ function useTorLogs() {
   useFetch(query)
   useOnline(query)
   useVisible(query)
-  // useInterval(query, 1000)
   return query
 }
 
