@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { useFetch, useQuery } from "@hazae41/xswr"
+import { useFetch, useOnline, useQuery, useVisible } from "@hazae41/xswr"
 import { OppositeTextButton, OppositeTextButtonRounded } from "../components/buttons/button"
 import { fetchJsonResult } from "../src/mods/fetchers/json"
 import { fetchText } from "../src/mods/fetchers/text"
@@ -14,6 +14,8 @@ interface Log {
 function useLogs() {
   const query = useQuery<Log[]>(`/api/logs`, fetchJsonResult)
   useFetch(query)
+  useOnline(query)
+  useVisible(query)
   // useInterval(query, 1000)
   return query
 }
@@ -21,6 +23,8 @@ function useLogs() {
 function useMyIP() {
   const query = useQuery<string>(`https://icanhazip.com/`, fetchText)
   useFetch(query)
+  useOnline(query)
+  useVisible(query)
   return query
 }
 
