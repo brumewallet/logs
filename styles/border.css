@@ -1,5 +1,9 @@
 @layer utilities {
   .border-default {
-    @apply border-violet6 hover:border-violet8;
+    @apply border-violet6;
+  }
+
+  .border-emphasis {
+    @apply border-violet8;
   }
 }

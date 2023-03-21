@@ -47,7 +47,7 @@ export default function Home() {
     </div>
 
   const LogRow = (log: Log) =>
-    <div key={log.created_at} className="p-4 border rounded-xl bg-component border-default w-full">
+    <div key={log.created_at} className="p-4 rounded-xl border border-default w-full">
       {LogSubrow("Time", new Date(log.created_at).toLocaleString())}
       {LogSubrow("IP Address", log.ip, log.tor ? "text-green-500" : "text-red-500")}
       {LogSubrow("RPC Method", log.method)}
@@ -137,18 +137,20 @@ export default function Home() {
     <div className="text-contrast">
       {`If you don't use Brume, you can setup logging on your wallet by using our proxy RPC, which will send all Ethereum requests to Cloudflare's Ethereum RPC and log the IP address the request is coming from.`}
     </div>
-    <div className="h-2" />
+    <div className="h-4" />
     <div>
       <span className="text-contrast">
         {`Just use the following RPC URL:`}
       </span>
       <span className="mr-1" />
-      <input className="w-[22ch] text-center"
-        readOnly
-        onClick={e => e.currentTarget.select()}
-        value="https://proxy.haz.workers.dev" />
+      <span className="border border-default p-2 rounded-xl">
+        <input className="outline-none w-[21ch] text-center"
+          readOnly
+          onClick={e => e.currentTarget.select()}
+          value="https://proxy.haz.workers.dev" />
+      </span>
     </div>
-    <div className="h-2" />
+    <div className="h-4" />
     <div className="text-contrast">
       {`You won't need to make an Ethereum transaction, your wallet already makes RPC requests when fetching your account balance.`}
     </div>
