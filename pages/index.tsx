@@ -117,7 +117,7 @@ export default function Home() {
     </div>
 
   const Body =
-    <div className="flex flex-wrap justify-evenly gap-[100px]">
+    <div className="flex flex-wrap justify-evenly gap-16">
       {YourIpLogs}
       {OtherIpLogs}
     </div>
