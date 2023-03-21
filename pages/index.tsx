@@ -156,7 +156,7 @@ export default function Home() {
     <div className="h-2" />
     <div className="flex flex-wrap items-center gap-2">
       <div className="text-contrast">
-        {`Just use the following RPC URL:`}
+        {`Just use the following RPC URL with chain ID 1:`}
       </div>
       <div className="border border-default p-2 rounded-xl grow">
         <input className="outline-none w-full text-center"
