@@ -28,6 +28,14 @@ export default function Home() {
   const myip = useMyIP()
   const logs = useLogs()
 
+  const RefreshButton =
+    <OppositeTextButton className="w-full"
+      onClick={() => logs.refetch()}>
+      {logs.loading
+        ? `Loading...`
+        : `Refresh`}
+    </OppositeTextButton>
+
   const LogSubrow = (title: string, text: string, style = "") =>
     <div className="flex gap-2 overflow-hidden text-ellipsis">
       <span className="shrink-0 text-gray-500">
@@ -67,31 +75,39 @@ export default function Home() {
     </div>
 
   const YourIpLogs =
-    <div className="flex flex-col gap-2 max-w-[400px]">
+    <div className="max-w-[400px]">
       <div className="text-2xl font-medium text-colored">
         {`Requests coming from your IP`}
       </div>
+      <div className="h-2" />
       <div className="text-contrast">
         {`When you use MetaMask and similar wallets, we can see your IP address and use it to get your location and link your different accounts.`}
       </div>
-      <div className="my-2" />
-      {logs.data
-        ?.filter(it => it.ip === myip.data?.trim())
-        ?.map(LogRow)}
+      <div className="h-4" />
+      <div className="flex flex-col gap-2">
+        {RefreshButton}
+        {logs.data
+          ?.filter(it => it.ip === myip.data?.trim())
+          ?.map(LogRow)}
+      </div>
     </div>
 
   const OtherIpLogs =
-    <div className="flex flex-col gap-2 max-w-[400px]">
+    <div className="max-w-[400px]">
       <div className="text-2xl font-medium text-colored">
         {`Requests coming from Tor`}
       </div>
+      <div className="h-2" />
       <div className="text-contrast">
         {`When you use Brume, we can't see your IP address, we can only see the IP address of a Tor node, which is different for each of your accounts.`}
       </div>
-      <div className="my-2" />
-      {logs.data
-        ?.filter(it => it.tor)
-        ?.map(LogRow)}
+      <div className="h-4" />
+      <div className="flex flex-col gap-2">
+        {RefreshButton}
+        {logs.data
+          ?.filter(it => it.tor)
+          ?.map(LogRow)}
+      </div>
     </div>
 
   const Body =
@@ -100,21 +116,8 @@ export default function Home() {
       {OtherIpLogs}
     </div>
 
-  const RefreshButton =
-    <OppositeTextButton className="w-[200px]"
-      onClick={() => logs.refetch()}>
-      {logs.loading
-        ? `Loading...`
-        : `Refresh`}
-    </OppositeTextButton>
-
-  const Toolbar =
-    <div className="flex items-center justify-center">
-      {RefreshButton}
-    </div>
-
-  const Header = <div className="max-w-[800px] m-auto flex flex-col gap-2">
-    <div className="flex self-center items-center gap-4">
+  const Header = <div className="max-w-[800px] m-auto">
+    <div className="flex justify-center items-center gap-4">
       <img className="h-[50px] w-auto"
         alt="logo"
         src="/logo.svg" />
@@ -122,17 +125,19 @@ export default function Home() {
         {`Brume Logs`}
       </span>
     </div>
-    <div className="h-4" />
-    <span className="text-contrast">
+    <div className="h-8" />
+    <div className="text-contrast">
       {`Don't trust, verify! This website will show you all Ethereum requests being made, by separating those coming from your IP address from those coming from the Tor network.`}
-    </span>
+    </div>
     <div className="h-8" />
     <div className="text-2xl font-medium text-colored">
       {`Setting up`}
     </div>
+    <div className="h-2" />
     <div className="text-contrast">
       {`If you don't use Brume, you can setup logging on your wallet by using our proxy RPC, which will send all Ethereum requests to Cloudflare's Ethereum RPC and log the IP address the request is coming from.`}
     </div>
+    <div className="h-2" />
     <div>
       <span className="text-contrast">
         {`Just use the following RPC URL:`}
@@ -143,6 +148,7 @@ export default function Home() {
         onClick={e => e.currentTarget.select()}
         value="https://proxy.haz.workers.dev" />
     </div>
+    <div className="h-2" />
     <div className="text-contrast">
       {`You won't need to make an Ethereum transaction, your wallet already makes RPC requests when fetching your account balance.`}
     </div>
@@ -150,9 +156,7 @@ export default function Home() {
 
   return <div className="p-8 bg-default">
     {Header}
-    <div className="h-8" />
-    {Toolbar}
-    <div className="h-8" />
+    <div className="h-16" />
     {Body}
   </div>
 }
