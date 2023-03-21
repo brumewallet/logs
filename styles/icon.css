@@ -1,4 +1,5 @@
 @layer components {
+
   .icon-4xs {
     @apply w-1 h-1;
   }
@@ -46,4 +47,5 @@
   .icon-5xl {
     @apply w-12 h-12;
   }
+  
 }

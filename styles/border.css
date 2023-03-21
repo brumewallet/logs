@@ -1,4 +1,5 @@
 @layer utilities {
+  
   .border-default {
     @apply border-violet6;
   }
@@ -6,4 +7,5 @@
   .border-emphasis {
     @apply border-violet8;
   }
+  
 }

@@ -1,4 +1,5 @@
 @layer utilities {
+
   .bg-default {
     @apply bg-violet1;
   }
@@ -6,4 +7,5 @@
   .bg-card {
     @apply bg-violet3;
   }
+  
 }
