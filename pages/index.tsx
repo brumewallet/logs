@@ -85,7 +85,7 @@ export default function Home() {
     </div>
 
   const YourIpLogs =
-    <div className="max-w-[400px]">
+    <div className="w-full max-w-[400px]">
       <div className="text-2xl font-medium text-colored">
         {`Requests coming from your IP`}
       </div>
@@ -106,7 +106,7 @@ export default function Home() {
     </div>
 
   const TorLogs =
-    <div className="max-w-[400px]">
+    <div className="w-full max-w-[400px]">
       <div className="text-2xl font-medium text-colored">
         {`Requests coming from Tor`}
       </div>
