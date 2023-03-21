@@ -86,7 +86,7 @@ export default function Home() {
         {`Requests coming from Tor`}
       </div>
       <div className="text-contrast">
-        {`When you use Brume, we can't see your IP address, we can only see a Tor network address, which is different for each of your accounts.`}
+        {`When you use Brume, we can't see your IP address, we can only see the IP address of a Tor node, which is different for each of your accounts.`}
       </div>
       <div className="my-2" />
       {logs.data
