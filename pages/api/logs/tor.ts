@@ -21,6 +21,6 @@ export default async function handler(
 
   if (error)
     res.status(200).json({ error })
-
-  res.status(200).json({ data })
+  else
+    res.status(200).json({ data })
 }
