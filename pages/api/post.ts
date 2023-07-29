@@ -19,12 +19,9 @@ export default async function handler(
 
   const { method, tor } = req.body
 
-  const { data, error } = await supabase
+  await supabase
     .from("requests")
     .insert({ ip, method, tor })
 
-  if (error)
-    res.status(200).json({ error })
-  else
-    res.status(200).json({ data })
+  res.status(200).send(undefined)
 }
