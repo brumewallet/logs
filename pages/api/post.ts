@@ -10,7 +10,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const ip = req.query.ip as string
+  const ip = req.headers["x-forwarded-for"] as string
 
   if (!ip) {
     res.status(400).send(undefined)
