@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import { getSchema, useFetch, useOnline, useQuery, useSchema, useVisible } from "@hazae41/xswr"
-import { OppositeTextButton, OppositeTextButtonRounded } from "../components/buttons/button"
-import { fetchJsonResult } from "../src/mods/fetchers/json"
-import { fetchText } from "../src/mods/fetchers/text"
+import { OppositeTextButton, OppositeTextButtonRounded } from "../src/libs/components/buttons/button"
+import { fetchJsonResult } from "../src/libs/fetchers/json"
+import { fetchText } from "../src/libs/fetchers/text"
 
 interface Log {
   created_at: string,
@@ -60,28 +60,28 @@ export default function Home() {
     <div key={log.created_at} className="p-4 rounded-xl border border-default w-full">
       {LogSubrow("Time", new Date(log.created_at).toLocaleString())}
       {LogSubrow("IP Address", log.ip, log.tor ? "text-green-500 truncate" : "text-red-500 truncate")}
-      {LogSubrow("RPC Method", log.method)}
+      {LogSubrow("RPC Method", log.method || "REDACTED")}
       <div className="h-2" />
-      <div className="flex gap-2">
-        <a className=""
-          href={`https://whatismyipaddress.com/ip/${log.ip}`}
-          target="_blank" rel="noopener noreferrer">
-          <OppositeTextButtonRounded>
-            <img className="icon-md"
-              alt="IP icon"
-              src="/ip.png" />
-          </OppositeTextButtonRounded>
-        </a>
-        <a className=""
+      {log.tor
+        ? <a className=""
           href={`https://metrics.torproject.org/rs.html#search/${log.ip}`}
           target="_blank" rel="noopener noreferrer">
           <OppositeTextButtonRounded>
-            <img className="icon-md"
+            <img className="icon-sm"
               alt="Onion icon"
               src="/tor.svg" />
+            Find IP address
           </OppositeTextButtonRounded>
-        </a>
-      </div>
+        </a> : <a className=""
+          href={`https://whatismyipaddress.com/ip/${log.ip}`}
+          target="_blank" rel="noopener noreferrer">
+          <OppositeTextButtonRounded>
+            <img className="icon-sm"
+              alt="IP icon"
+              src="/ip.png" />
+            Find IP address
+          </OppositeTextButtonRounded>
+        </a>}
     </div>
 
   const YourIpLogs =
@@ -134,9 +134,9 @@ export default function Home() {
 
   const Header = <div className="max-w-[800px] m-auto">
     <div className="flex justify-center items-center gap-4">
-      <img className="h-[50px] w-auto"
+      <img className="h-[96px] w-auto"
         alt="logo"
-        src="/logo.svg" />
+        src="/logo.png" />
       <span className="text-4xl font-bold text-colored">
         {`Brume Logs`}
       </span>

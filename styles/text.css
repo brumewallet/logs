@@ -1,11 +1,9 @@
 @layer utilities {
-
   .text-contrast {
     @apply text-mauve11;
   }
 
   .text-colored {
-    @apply text-violet11;
+    @apply text-black;
   }
-  
 }

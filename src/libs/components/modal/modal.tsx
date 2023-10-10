@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useEffect } from "react"
 import { createPortal } from "react-dom"
-import { useLazyMemo } from "../../react/memo"
+import { useLazyMemo } from "../../../../react/memo"
 
 interface ChildrenProps {
   children: ReactNode
