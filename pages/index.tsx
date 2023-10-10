@@ -67,7 +67,7 @@ export default function Home() {
           href={`https://metrics.torproject.org/rs.html#search/${log.ip}`}
           target="_blank" rel="noopener noreferrer">
           <OppositeTextButtonRounded>
-            <img className="icon-sm"
+            <img className="icon-xs"
               alt="Onion icon"
               src="/tor.svg" />
             Find IP address
@@ -76,7 +76,7 @@ export default function Home() {
           href={`https://whatismyipaddress.com/ip/${log.ip}`}
           target="_blank" rel="noopener noreferrer">
           <OppositeTextButtonRounded>
-            <img className="icon-sm"
+            <img className="icon-xs"
               alt="IP icon"
               src="/ip.png" />
             Find IP address
