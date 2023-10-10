@@ -57,7 +57,7 @@ export default function Home() {
     </div>
 
   const LogRow = (log: Log) =>
-    <div key={log.created_at} className="p-4 rounded-xl border border-default w-full">
+    <div key={log.created_at} className="p-4 rounded-xl border border-black border-opacity-50 w-full">
       {LogSubrow("Time", new Date(log.created_at).toLocaleString())}
       {LogSubrow("IP Address", log.ip, log.tor ? "text-green-500 truncate" : "text-red-500 truncate")}
       {LogSubrow("RPC Method", log.method || "REDACTED")}
@@ -158,7 +158,7 @@ export default function Home() {
       <div className="text-contrast">
         {`Just use the following RPC URL with chain ID 1:`}
       </div>
-      <div className="border border-default p-2 rounded-xl grow">
+      <div className="border border-black border-opacity-50 p-2 rounded-xl grow">
         <input className="bg-transparent outline-none w-full text-center"
           readOnly
           onClick={e => e.currentTarget.select()}
