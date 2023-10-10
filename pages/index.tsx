@@ -70,7 +70,7 @@ export default function Home() {
             <img className="icon-xs"
               alt="Onion icon"
               src="/tor.svg" />
-            Find IP address
+            Search IP address
           </OppositeTextButtonRounded>
         </a> : <a className=""
           href={`https://whatismyipaddress.com/ip/${log.ip}`}
@@ -79,7 +79,7 @@ export default function Home() {
             <img className="icon-xs"
               alt="IP icon"
               src="/ip.png" />
-            Find IP address
+            Search IP address
           </OppositeTextButtonRounded>
         </a>}
     </div>
